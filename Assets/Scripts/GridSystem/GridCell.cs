@@ -20,5 +20,5 @@ public class GridCell
         _CellPosition = position;
     }
 
-    
+    public override string ToString() => $"X: {_CellX}, Y: {_CellY}";
 }
