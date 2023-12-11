@@ -70,6 +70,12 @@ public class GridController : MonoBehaviour
 
                         Gizmos.DrawLine(startPos, endX);
                         Gizmos.DrawLine(startPos, endY);
+
+                        if(cell.IsSelected)
+                        {
+                            Gizmos.color = Color.green;
+                            Gizmos.DrawCube(cell.GetCenter(), new Vector3(_CellSize, 0.1f, _CellSize));
+                        }
                     }
                 }
             }
