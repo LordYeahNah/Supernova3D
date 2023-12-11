@@ -12,7 +12,10 @@ public class GridCell
     public int CellY => _CellY;
     public Vector3 CellPosition => _CellPosition;
 
-    public bool IsSelected = false;
+    // === Cell Flags === //
+    public bool IsSelected = false;                             // If the cell has been selected
+    public BaseRoom _AssignedRoom;                             // Room that has been built here
+    public bool HasAssignedRoom => _AssignedRoom == null ? false : true;
 
     public GridCell(int cellX, int cellY, float size, Vector3 position)
     {
