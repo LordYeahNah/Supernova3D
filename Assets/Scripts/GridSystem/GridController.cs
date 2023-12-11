@@ -76,6 +76,12 @@ public class GridController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Gets the cell at index
+    /// </summary>
+    /// <param name="x">X Index</param>
+    /// <param name="y">Y Index</param>
+    /// <returns>Cell at index position</returns>
     public GridCell GetCell(int x, int y)
     {
         if(x > 0 && x < _Grid.GetLength(0))
@@ -89,6 +95,11 @@ public class GridController : MonoBehaviour
         return null;
     }
 
+    /// <summary>
+    /// Gets cell based on position
+    /// </summary>
+    /// <param name="position">Position to find in</param>
+    /// <returns>Cell at position</returns>
     public GridCell GetCell(Vector3 position)
     {
         position.y = 0f;
