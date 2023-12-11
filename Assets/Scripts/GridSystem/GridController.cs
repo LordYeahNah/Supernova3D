@@ -73,8 +73,22 @@ public class GridController : MonoBehaviour
 
                         if(cell.IsSelected)
                         {
-                            Gizmos.color = Color.green;
-                            Gizmos.DrawCube(cell.GetCenter(), new Vector3(_CellSize, 0.1f, _CellSize));
+                            if(!cell.HasAssignedRoom)
+                            {
+                                Gizmos.color = Color.green;
+                                Gizmos.DrawCube(cell.GetCenter(), new Vector3(_CellSize, 0.1f, _CellSize));    
+                            } else 
+                            {
+                                Gizmos.color = Color.red;
+                                Gizmos.DrawCube(cell.GetCenter(), new Vector3(_CellSize, 0.1f, _CellSize));
+                            }
+                        } else 
+                        {
+                            if(cell.HasAssignedRoom)
+                            {
+                                Gizmos.color = Color.yellow;
+                                Gizmos.DrawCube(cell.GetCenter(), new Vector3(_CellSize, 0.1f, _CellSize));
+                            }
                         }
                     }
                 }
