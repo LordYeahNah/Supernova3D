@@ -38,7 +38,7 @@ public class BuildingController : MonoBehaviour
         {
             _StartCell = null;
             _IsDragging = false;
-            _DeselectCells();
+            
         }
 
         if(_IsDragging)
