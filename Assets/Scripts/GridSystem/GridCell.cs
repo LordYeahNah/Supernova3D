@@ -20,5 +20,15 @@ public class GridCell
         _CellPosition = position;
     }
 
+    public Vector3 GetCenter()
+    {
+        return new Vector3
+        {
+            x = _CellPosition.x + (_CellSize / 2),
+            y = 0f,
+            z = _CellPosition.z + (_CellSize / 2)
+        };
+    }
+
     public override string ToString() => $"X: {_CellX}, Y: {_CellY}";
 }
