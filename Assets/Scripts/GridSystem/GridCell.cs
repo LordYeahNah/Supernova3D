@@ -12,6 +12,8 @@ public class GridCell
     public int CellY => _CellY;
     public Vector3 CellPosition => _CellPosition;
 
+    public bool IsSelected = false;
+
     public GridCell(int cellX, int cellY, float size, Vector3 position)
     {
         _CellX = cellX;
