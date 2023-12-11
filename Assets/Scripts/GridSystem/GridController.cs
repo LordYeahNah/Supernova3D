@@ -75,4 +75,43 @@ public class GridController : MonoBehaviour
             }
         }
     }
+
+    public GridCell GetCell(int x, int y)
+    {
+        if(x > 0 && x < _Grid.GetLength(0))
+        {
+            if(y > 0 && y < _Grid.GetLength(0))
+            {
+                return _Grid[x, y];
+            }
+        }
+
+        return null;
+    }
+
+    public GridCell GetCell(Vector3 position)
+    {
+        position.y = 0f;
+
+        for(int y = 0; y < _Grid.GetLength(1); ++y)
+        {
+            for(int x = 0; x < _Grid.GetLength(0); ++x)
+            {
+                GridCell cell = _Grid[x, y];
+                if(cell != null)
+                {
+                    Vector3 cellPos = cell.CellPosition;
+                    if(position.x >= cellPos.x && position.x < (cellPos.x + _CellSize))
+                    {
+                        if(position.z >= cellPos.z && position.z < (cellPos.z + _CellSize))
+                        {
+                            return cell;
+                        }
+                    }
+                }
+            }
+        }
+
+        return null;
+    }
 }
