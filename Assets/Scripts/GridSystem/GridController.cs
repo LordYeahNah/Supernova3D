@@ -90,7 +90,10 @@ public class GridController : MonoBehaviour
                                 Gizmos.DrawCube(cell.GetCenter(), new Vector3(_CellSize, 0.1f, _CellSize));
                             }
                         }
+
                     }
+
+                    Gizmos.color = Color.red;
                 }
             }
         }

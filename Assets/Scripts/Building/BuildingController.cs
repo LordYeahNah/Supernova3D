@@ -107,19 +107,24 @@ public class BuildingController : MonoBehaviour
             _SelectedCells = new GridCell[xCellAmount + 1, yCellAmount + 1];
             
             int cellCountX = 0, cellCountY = 0;
-            for(int x = _StartCell.CellX; x <= currentCell.CellX; ++x)
+
+            int xIncrement = (cellsX > 0) ? 1 : -1;
+            for(int x = _StartCell.CellX; x != currentCell.CellX; x += xIncrement)
             {
-                for(int y = _StartCell.CellY; y <= currentCell.CellY; ++y)
+                int yIncrement = (cellsY > 0) ? 1 : -1;
+                for(int y = _StartCell.CellY; y != currentCell.CellY; y += yIncrement)
                 {
                     GridCell cell = _Grid.GetCell(x, y);
                     if(cell != null)
                     {
                         cell.IsSelected = true;
+                        _SelectedCells[cellCountX, cellCountY] = cell;
                     }
 
-                    cellCountY += 1;
+                    cellCountY++;
                 }
-                cellCountX += 1;
+
+                cellCountX++;
                 cellCountY = 0;
             }
         }
