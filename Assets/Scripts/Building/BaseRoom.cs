@@ -14,10 +14,14 @@ public enum EResourceType
 public abstract class BaseRoom
 {
     protected RoomData _Data;                       // Reference to the room data
+    public RoomData Data => _Data;
     protected Timer _ResourceTimer;                 // Timer for generating resources
 
     // How long it takes for the room to produce resources
-    protected float _CurrentResourceTime;       
+    protected float _CurrentResourceTime;  
+
+    protected GridCell[,] _Cells;                               // Reference to the cells that this room is in
+
     public float CurrentResourceTime 
     {
         get => _CurrentResourceTime;
@@ -113,5 +117,37 @@ public abstract class BaseRoom
     }
 
     protected abstract void _CalculateTimeBasedOnColonist();
+
+    public void PlaceRoom(GridCell[,] cells)
+    {
+        _Cells = cells;
+    }
+
+    public void AddCells(GridCell[,] cells)
+    {
+        int countX = 0, countY = 0;
+        GridCell[,] updatedCells = new GridCell[_Cells.GetLength(0) + cells.GetLength(0), _Cells.GetLength(1) + cells.GetLength(1)];
+        for(int x = 0; x < _Cells.GetLength(0); ++x)
+        {
+            for(int y = 0; y < _Cells.GetLength(1); ++y)
+            {
+                updatedCells[countX, countY] = _Cells[x, y];
+                countY++;
+            }
+            countX++;
+            countY = 0;
+        }
+
+        for(int x = 0; x < cells.GetLength(0); ++x)
+        {
+            for(int y = 0; y < cells.GetLength(1); ++y)
+            {
+                updatedCells[countX, countY] = cells[x, y];
+                countY++;
+            }
+            countY = 0;
+            countX++;
+        }
+    }
 
 }
