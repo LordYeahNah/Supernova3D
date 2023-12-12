@@ -118,26 +118,38 @@ public abstract class BaseRoom
 
     protected abstract void _CalculateTimeBasedOnColonist();
 
+    /// <summary>
+    /// Assigns the cells to a room
+    /// </summary>
+    /// <param name="cells">Grid cells this room is over</param>
     public void PlaceRoom(GridCell[,] cells)
     {
         _Cells = cells;
     }
 
+    /// <summary>
+    /// Adds grid cells to the room
+    /// </summary>
+    /// <param name="cells">Cells to add to the grid</param>
     public void AddCells(GridCell[,] cells)
     {
-        int countX = 0, countY = 0;
+        int countX = 0, countY = 0;                     // Define the cell count
+        // Create the new grid
         GridCell[,] updatedCells = new GridCell[_Cells.GetLength(0) + cells.GetLength(0), _Cells.GetLength(1) + cells.GetLength(1)];
+
+        // 2D loop to update the cells
         for(int x = 0; x < _Cells.GetLength(0); ++x)
         {
             for(int y = 0; y < _Cells.GetLength(1); ++y)
             {
-                updatedCells[countX, countY] = _Cells[x, y];
-                countY++;
+                updatedCells[countX, countY] = _Cells[x, y];                        // Assign the cells
+                countY++;                   // Increment the count
             }
-            countX++;
-            countY = 0;
+            countX++;                           // Increment count
+            countY = 0;                     // Reset count
         }
 
+        // 2D Loop to update with the new cells
         for(int x = 0; x < cells.GetLength(0); ++x)
         {
             for(int y = 0; y < cells.GetLength(1); ++y)
@@ -148,6 +160,7 @@ public abstract class BaseRoom
             countY = 0;
             countX++;
         }
+        _Cells = updatedCells;                          // Assign the cells
     }
 
 }
