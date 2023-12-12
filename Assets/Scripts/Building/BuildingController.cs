@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
+using System.Collections;
 using UnityEngine;
 
 public class BuildingController : MonoBehaviour 
@@ -41,18 +41,21 @@ public class BuildingController : MonoBehaviour
         // Begin dragging
         if(Input.GetMouseButtonDown(0) && _SelectedRoom != null)
         {
-            _DeselectAll();
+            _DeselectCells();
             _StartCell = _CastToGridCell();
             _IsDragging = true;
         }
 
-        if(Input.GetMouseButtonUp(0) && _SelectedRoom != null)
+        if(Input.GetMouseButtonUp(0) && _SelectedRoom != null && IsPlacingRoom)
         {       
-            if(_BuildingHUD)
-                _BuildingHUD.ToggleConfirmPlacement(true);
+            if(_SelectedCells != null && _SelectedCells.GetLength(0) > 0 && _SelectedCells.GetLength(1) > 0)
+            {
+                if(_BuildingHUD)
+                    _BuildingHUD.ToggleConfirmPlacement(true);
 
-            _IsDragging = false;
-            _StartCell = null;
+                _IsDragging = false;
+                _StartCell = null;
+            }
         }
 
 
@@ -90,7 +93,7 @@ public class BuildingController : MonoBehaviour
 
     private void _CalculateSelectedCells()
     {
-        if(!_IsDragging)
+        if(!_IsDragging || _StartCell == null)
             return;
 
         _DeselectCells();
@@ -186,11 +189,17 @@ public class BuildingController : MonoBehaviour
         _SelectedRoom = room;
         if(room != null)
         {
-            IsPlacingRoom = true;
+            StartCoroutine(_EnablePlacingRoom(true));
         } else 
         {
             IsPlacingRoom = false;
         }
+    }
+
+    private IEnumerator _EnablePlacingRoom(bool setPlacing)
+    {
+        yield return new WaitForSeconds(3.0f);
+        IsPlacingRoom = setPlacing;
     }
 
     private void _DeselectAll()
