@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Unity.Android.Gradle.Manifest;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public enum EResourceType
@@ -125,6 +126,41 @@ public abstract class BaseRoom
     public void PlaceRoom(GridCell[,] cells)
     {
         _Cells = cells;
+
+        for(int x = 0; x < _Cells.GetLength(0); ++x)
+        {
+            for(int y = 0; y < _Cells.GetLength(1); ++y)
+            {
+                // Spawn the floor tiles
+                GameObject spawnedFloor = GameObject.Instantiate(_Data.Floor);
+                if(spawnedFloor)
+                {
+                    spawnedFloor.transform.position = _Cells[x, y].CellPosition;
+                }
+
+                if(y == 0 || y == _Cells.GetLength(1) - 1)
+                {
+                    GameObject spawnedWall = GameObject.Instantiate(_Data.Wall);
+                    if(spawnedWall != null)
+                    {
+                        spawnedWall.transform.position = _Cells[x, y].CellPosition;
+                        Quaternion quat = Quaternion.identity;
+                        quat.eulerAngles = new Vector3(spawnedWall.transform.rotation.x, 90f, spawnedWall.transform.rotation.z);
+                        spawnedWall.transform.rotation = quat;
+                    }
+                }
+
+                if(x == 0 || x == _Cells.GetLength(0) - 1)
+                {
+                    GameObject spawnedWall = GameObject.Instantiate(_Data.Wall);
+                    if(spawnedWall)
+                    {
+                        spawnedWall.transform.position = _Cells[x, y].CellPosition;
+                    }
+                       
+                }
+            }
+        }
     }
 
     /// <summary>

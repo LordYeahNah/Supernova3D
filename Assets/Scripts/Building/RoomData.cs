@@ -11,4 +11,13 @@ public class RoomData
 
     [Tooltip("How many resources are generated when ready for collection")]
     public int ResourcesGenerated;                              // How many resources are generated when ready for collection
+
+    [Header("Room Objects")]
+    public GameObject Wall;
+    public GameObject Floor;
+    public GameObject Corner;
+
+    [Header("Room Sizing")]
+    public int MinCellsX;
+    public int MinCellsY;
 }

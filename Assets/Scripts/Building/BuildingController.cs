@@ -155,6 +155,14 @@ public class BuildingController : MonoBehaviour
         if(placed)
         {
             BaseRoom placingRoom = CreateRoom(_SelectedRoom);
+
+            if(_SelectedCells.GetLength(0) < placingRoom.Data.MinCellsX && _SelectedCells.GetLength(1) < placingRoom.Data.MinCellsY)
+            {
+                Debug.Log("#BuildingController::OnConfirmPlacement --> Invalid Size");
+                _DeselectCells();
+                return;
+            }
+
             bool cancelPlacement = false;
             GridCell[,] cells = new GridCell[_SelectedCells.GetLength(0), _SelectedCells.GetLength(1)];
 
