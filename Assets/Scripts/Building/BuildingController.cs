@@ -49,16 +49,20 @@ public class BuildingController : MonoBehaviour
             return; 
 
         // Begin dragging
-        if(Input.GetMouseButtonDown(0) && _SelectedRoom != null)
+        if(Input.GetMouseButtonDown(0))
         {
-            if(IsPlacingRoom)
+            if(_SelectedRoom != null)
             {
-                _DeselectCells();
-                _StartCell = _CastToGridCell();
-                _IsDragging = true;
-            } else if(IsPlacingDoor)
+                if(IsPlacingRoom)
+                {
+                    _DeselectCells();
+                    _StartCell = _CastToGridCell();
+                    _IsDragging = true;
+                }
+            } else 
             {
-                PlaceDoor();
+                if(IsPlacingDoor)
+                    PlaceDoor();
             }
         }
 
