@@ -107,7 +107,7 @@ public class BuildingController : MonoBehaviour
             int xCellAmount = Mathf.Abs(cellsX);
             int yCellAmount = Mathf.Abs(cellsY);
 
-            _SelectedCells = new GridCell[xCellAmount + 1, yCellAmount + 1];
+            _SelectedCells = new GridCell[xCellAmount, yCellAmount];
             
             int cellCountX = 0, cellCountY = 0;
 
@@ -154,21 +154,60 @@ public class BuildingController : MonoBehaviour
     {
         if(placed)
         {
-            for(int x = 0; x < _SelectedCells.GetLength(0); ++x)
+            BaseRoom placingRoom = CreateRoom(_SelectedRoom);
+            bool cancelPlacement = false;
+            GridCell[,] cells = new GridCell[_SelectedCells.GetLength(0), _SelectedCells.GetLength(1)];
+
+            for(int x = 0; x < cells.GetLength(0); ++x)
             {
-                for(int y = 0; y < _SelectedCells.GetLength(1); ++y)
+                for(int y = 0; y < cells.GetLength(1); ++y)
                 {
-                    GridCell cell = _SelectedCells[x, y];
-                    if(cell != null)
-                        cell._AssignedRoom = CreateRoom(_SelectedRoom);
-                }
+                    GridCell cellRef = _SelectedCells[x, y];
+                    if(cellRef != null)
+                    {
+                        if(cellRef.HasAssignedRoom)
+                        {
+                            Debug.Log("#BuildingController::OnConfirmPlacement --> Cell is in use");
+                            // TODO: Display error placing message
+                            cancelPlacement = true;
+                            _DeselectCells();
+                            break;
+                        } else 
+                        {
+                            cells[x, y] = cellRef;
+                        }
+
+                        if(cancelPlacement)
+                        {
+                            break;
+                        }
+                    } else 
+                    {
+                        Debug.Log("#BuildingController::OnConfirmPlacement --> Cell is null");
+                        cancelPlacement = true;
+                        _DeselectCells();
+                        break;
+                    }
+                }   
             }
+
+            if(!cancelPlacement)
+            {
+                for(int x = 0; x < cells.GetLength(0); ++x)
+                {
+                    for(int y = 0; y < cells.GetLength(1); ++y)
+                    {
+                        cells[x, y]._AssignedRoom = placingRoom;
+                    }
+                }
+
+                placingRoom.PlaceRoom(cells);
+            } 
         } else 
         {
             _DeselectAll();
+            IsPlacingRoom = false;
         }
-
-        IsPlacingRoom = false;
     }
 
     private BaseRoom CreateRoom(RoomData data)
