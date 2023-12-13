@@ -5,9 +5,19 @@ using UnityEngine;
 public class BuildingController : MonoBehaviour 
 {
     public bool IsInBuildMode = false;                              // If we are currently in build mode
+
+    // === Building Placement === //
     private bool IsPlacingRoom = false;                                 // If we have selected a building and are placing it
     private RoomData _SelectedRoom;                                 // Room that has been selected to build
 
+    // === Door Placement === //
+    private bool IsPlacingDoor = false;
+    private GameObject _MouseOverWall = null;                               // reference to the wall the mouse is currently over
+    private GameObject _SpawnedDoor = null;                             // Reference to the spawned door
+    [SerializeField] private LayerMask _WallLayer;
+
+    
+    // === Misc === //
     [SerializeField] private GridController _Grid;                          // Reference to the grid controller
     [SerializeField] private LayerMask _GroundLayer;                    // Layer mask for placing only on ground
     
@@ -41,9 +51,15 @@ public class BuildingController : MonoBehaviour
         // Begin dragging
         if(Input.GetMouseButtonDown(0) && _SelectedRoom != null)
         {
-            _DeselectCells();
-            _StartCell = _CastToGridCell();
-            _IsDragging = true;
+            if(IsPlacingRoom)
+            {
+                _DeselectCells();
+                _StartCell = _CastToGridCell();
+                _IsDragging = true;
+            } else if(IsPlacingDoor)
+            {
+                PlaceDoor();
+            }
         }
 
         if(Input.GetMouseButtonUp(0) && _SelectedRoom != null && IsPlacingRoom)
@@ -57,6 +73,9 @@ public class BuildingController : MonoBehaviour
                 _StartCell = null;
             }
         }
+
+        if(IsPlacingDoor)
+            _CastDoorToWall();
 
 
         if(_IsDragging)
@@ -208,8 +227,15 @@ public class BuildingController : MonoBehaviour
                         cells[x, y]._AssignedRoom = placingRoom;
                     }
                 }
-
+                
                 placingRoom.PlaceRoom(cells);
+
+                if(!_SpawnedDoor)
+                    _SpawnedDoor = GameObject.Instantiate(_SelectedRoom.Door);
+
+                IsPlacingRoom = false;
+                IsPlacingDoor = true;
+                _DeselectAll();
             } 
         } else 
         {
@@ -245,7 +271,7 @@ public class BuildingController : MonoBehaviour
 
     private IEnumerator _EnablePlacingRoom(bool setPlacing)
     {
-        yield return new WaitForSeconds(3.0f);
+        yield return new WaitForSeconds(0.5f);
         IsPlacingRoom = setPlacing;
     }
 
@@ -255,5 +281,50 @@ public class BuildingController : MonoBehaviour
         _IsDragging = false;
         SetPlacingRoom(null);
         _SelectedCells = null;
+    }
+
+    private void _CastDoorToWall()
+    {
+        if(!_Cam)
+            return;
+
+        // Reset the wall
+        if(_MouseOverWall)
+            _MouseOverWall.SetActive(true);
+
+        Ray ray = _Cam.ScreenPointToRay(Input.mousePosition);                       // Create the ray for the raycast
+        
+        // Perform the raycast
+        if(Physics.Raycast(ray, out RaycastHit hit, 1000f, _WallLayer))
+        {
+            // Check hit is valid
+            if(hit.collider)
+            {
+                _MouseOverWall = hit.collider.gameObject;                       // Set the wall that the mouse is over
+
+                // Disable the wall the mouse is over
+                if(_MouseOverWall)
+                    _MouseOverWall.SetActive(false);
+
+                if(_SpawnedDoor)
+                {
+                    _SpawnedDoor.transform.position = _MouseOverWall.transform.position;
+                    _SpawnedDoor.transform.rotation = _MouseOverWall.transform.rotation;
+                } else 
+                {
+                    Debug.LogError("#BuildingController::_CastToDoor -- > Door has not been spawned");
+                }
+            }
+        }
+    }
+
+    private void PlaceDoor()
+    {
+        if(_SpawnedDoor != null)
+        {
+            Destroy(_MouseOverWall);
+            _SpawnedDoor = null;
+            IsPlacingDoor = false;
+        }
     }
 }
