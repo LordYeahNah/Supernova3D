@@ -135,10 +135,10 @@ public abstract class BaseRoom
                 GameObject spawnedFloor = GameObject.Instantiate(_Data.Floor);
                 if(spawnedFloor)
                 {
-                    spawnedFloor.transform.position = _Cells[x, y].CellPosition;
+                    spawnedFloor.transform.position = _Cells[x, y].GetCenter();
                 }
 
-                if(y == 0 || y == _Cells.GetLength(1) - 1)
+                if(y == 0)
                 {
                     GameObject spawnedWall = GameObject.Instantiate(_Data.Wall);
                     if(spawnedWall != null)
@@ -148,16 +148,32 @@ public abstract class BaseRoom
                         quat.eulerAngles = new Vector3(spawnedWall.transform.rotation.x, 90f, spawnedWall.transform.rotation.z);
                         spawnedWall.transform.rotation = quat;
                     }
+                } else if( y == _Cells.GetLength(1) - 1)
+                {
+                    GameObject spawnedWall = GameObject.Instantiate(_Data.Wall);
+                    if(spawnedWall != null)
+                    {
+                        spawnedWall.transform.position = _Cells[x, y].GetCellOffsetY(EOffsetDirection.FORWARDS);
+                        Quaternion quat = Quaternion.identity;
+                        quat.eulerAngles = new Vector3(spawnedWall.transform.rotation.x, 90f, spawnedWall.transform.rotation.z);
+                        spawnedWall.transform.rotation = quat;
+                    }
                 }
 
-                if(x == 0 || x == _Cells.GetLength(0) - 1)
+                if(x == 0)
                 {
                     GameObject spawnedWall = GameObject.Instantiate(_Data.Wall);
                     if(spawnedWall)
                     {
                         spawnedWall.transform.position = _Cells[x, y].CellPosition;
                     }
-                       
+                } else if(x == _Cells.GetLength(0) - 1)
+                {
+                    GameObject spawnedWall = GameObject.Instantiate(_Data.Wall);
+                    if(spawnedWall)
+                    {
+                        spawnedWall.transform.position = _Cells[x, y].GetCellOffsetX(EOffsetDirection.FORWARDS);
+                    }
                 }
             }
         }
