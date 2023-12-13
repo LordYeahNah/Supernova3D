@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.AI;
+using Pathfinding;
+using Pathfinding.Util;
 
 public class BuildingController : MonoBehaviour 
 {
@@ -32,6 +33,8 @@ public class BuildingController : MonoBehaviour
 
     private Camera _Cam;                                    // Store reference to the camera
 
+    // === Pathfinding === //   
+
     private void Awake()
     {
         // Validate grid
@@ -41,7 +44,6 @@ public class BuildingController : MonoBehaviour
         // Get reference to the camera
         if(!_Cam)
             _Cam = Camera.main;
-
 
     }
 
@@ -332,6 +334,7 @@ public class BuildingController : MonoBehaviour
             Destroy(_MouseOverWall);
             _SpawnedDoor = null;
             IsPlacingDoor = false;
+            AstarPath.active.Scan();
         }
     }
 }

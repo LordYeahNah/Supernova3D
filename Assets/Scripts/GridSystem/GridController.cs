@@ -82,13 +82,6 @@ public class GridController : MonoBehaviour
                                 Gizmos.color = Color.red;
                                 Gizmos.DrawCube(cell.GetCenter(), new Vector3(_CellSize, 0.1f, _CellSize));
                             }
-                        } else 
-                        {
-                            if(cell.HasAssignedRoom)
-                            {
-                                Gizmos.color = Color.yellow;
-                                Gizmos.DrawCube(cell.GetCenter(), new Vector3(_CellSize, 0.1f, _CellSize));
-                            }
                         }
 
                     }
