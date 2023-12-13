@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class BuildingController : MonoBehaviour 
 {
@@ -22,9 +23,9 @@ public class BuildingController : MonoBehaviour
     [SerializeField] private LayerMask _GroundLayer;                    // Layer mask for placing only on ground
     
     [SerializeField] private BuildingHUD _BuildingHUD;                      // Reference to the building HUD
+
     
-
-
+    // === Grid Properties === //
     private bool _IsDragging = false;                                   // If we are currently dragging
     private GridCell _StartCell;                                        // Reference to the cell that has started the dragging
     private GridCell[,] _SelectedCells;                                 // Reference to the cells that have been selected
@@ -40,6 +41,8 @@ public class BuildingController : MonoBehaviour
         // Get reference to the camera
         if(!_Cam)
             _Cam = Camera.main;
+
+
     }
 
     private void Update()
