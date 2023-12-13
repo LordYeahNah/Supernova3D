@@ -16,6 +16,7 @@ public class RoomData
     public GameObject Wall;
     public GameObject Floor;
     public GameObject Corner;
+    public GameObject Door;
 
     [Header("Room Sizing")]
     public int MinCellsX;
