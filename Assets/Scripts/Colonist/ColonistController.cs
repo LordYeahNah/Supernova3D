@@ -1,4 +1,5 @@
 using System;
+using Pathfinding;
 using UnityEngine;
 
 public class ColonistController : MonoBehaviour
@@ -11,9 +12,33 @@ public class ColonistController : MonoBehaviour
 	[Header("Colonist Generation")]
 	[SerializeField] private bool _GenerateColonist = false;
 	[SerializeField] private bool _AddToColony = false;
+	[SerializeField] private Seeker _Seeker;							// Reference to the AI Seeker
+	[SerializeField] private Transform _DebugPosition;
+
 	
 
 	public bool HasBeenSelected = false;					// Flag if the character has been selected
+
+	private void Awake()
+	{
+		if(!_Seeker)
+			TryGetComponent<Seeker>(out _Seeker);
+	}
+
+	private void Start()
+	{
+		if(_Seeker)
+			_Seeker.StartPath(this.transform.position, _DebugPosition.position, OnPathComplete);
+	}
+
+	public void OnPathComplete(Path p)
+	{
+		if(p.error)
+		{
+			Debug.Log("#ColonistController::OnPathComplete --> Failed to complete path");
+		}
+	}
+
 
 	/// <summary>
 	/// Sets the colonist and this controller to the colonist
