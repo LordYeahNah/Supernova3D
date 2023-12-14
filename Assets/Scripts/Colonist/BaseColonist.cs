@@ -13,6 +13,7 @@ public enum EAgeGroup
     ADULT
 }
 
+[System.Serializable]
 public class BaseColonist : BaseCharacter
 {
 

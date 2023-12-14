@@ -24,6 +24,12 @@ public class ColonistController : MonoBehaviour
 	{
 		if(!_Seeker)
 			TryGetComponent<Seeker>(out _Seeker);
+
+		if(_GenerateColonist)
+		{
+			_Colonist = ColonistGenerator.GenerateColonist(false);
+			_Colonist.Controller = this;
+		}
 	}
 
 	private void Start()
