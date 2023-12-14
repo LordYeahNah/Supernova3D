@@ -12,7 +12,7 @@ public abstract class Task
 {
     public BehaviorTree _Tree;
     public Task Parent;
-    public List<Task> _Children = new List<Task>();
+    protected List<Task> _Children = new List<Task>();
 
     public Task(BehaviorTree tree)
     {
@@ -27,7 +27,7 @@ public abstract class Task
             _AttachChild(child);
     }
 
-    private void _AttachChild(Task child)
+    protected void _AttachChild(Task child)
     {
         _Children.Add(child);
         child.Parent = this;
