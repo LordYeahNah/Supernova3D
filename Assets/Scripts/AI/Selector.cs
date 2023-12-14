@@ -7,6 +7,10 @@ public class Selector : Task
     {
     }
 
+    public Selector(BehaviorTree tree, List<Task> children) : base(tree, children)
+    {
+    }
+
     public override ETaskStatus RunTask()
     {
         foreach(var child in _Children)
