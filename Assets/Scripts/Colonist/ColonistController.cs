@@ -29,6 +29,7 @@ public class ColonistController : MonoBehaviour
 		{
 			_Colonist = ColonistGenerator.GenerateColonist(false);
 			_Colonist.Controller = this;
+			_Colonist.CharacterTransform = this.transform;
 		}
 	}
 

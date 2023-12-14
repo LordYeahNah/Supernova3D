@@ -50,7 +50,7 @@ public class ColonyController : MonoBehaviour
         foreach(var colonist in _Colonist)
         {
             if(colonist != null)
-                colonist.OnUpdate(Time.deltaTime);
+                colonist.OnUpdate();
         }
     }
     

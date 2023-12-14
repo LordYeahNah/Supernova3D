@@ -1185,6 +1185,7 @@ GameObject:
   - component: {fileID: 724752395}
   - component: {fileID: 724752394}
   - component: {fileID: 724752393}
+  - component: {fileID: 724752397}
   m_Layer: 8
   m_Name: Colonist
   m_TagString: Untagged
@@ -1296,6 +1297,24 @@ Transform:
   - {fileID: 980698073}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &724752397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 724752392}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e92fc814086d413488c06e958b73ab9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _MovementSpeed: 0
+  _GenerateColonist: 1
+  _AddToColony: 0
+  _Seeker: {fileID: 724752394}
+  _DebugPosition: {fileID: 724752396}
+  HasBeenSelected: 0
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -1578,6 +1597,65 @@ Transform:
   m_Children:
   - {fileID: 550277438}
   m_Father: {fileID: 724752396}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1000817207
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1000817209}
+  - component: {fileID: 1000817208}
+  m_Layer: 0
+  m_Name: NameDatabase
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1000817208
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000817207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b996453094fdcad4794c74b13160ae81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _MaleNames:
+  - John
+  - Peter
+  - Keegan
+  - Alex
+  _FemaleNames:
+  - Tayla
+  - Emily
+  - Justine
+  - Julie
+  _LastNames:
+  - Johnson
+  - Miller
+  - McAndrews
+  - Taylor
+--- !u!4 &1000817209
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000817207}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -10.899171, y: -6.615014, z: 11.810247}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1028915939
 GameObject:
@@ -3354,3 +3432,4 @@ SceneRoots:
   - {fileID: 724752396}
   - {fileID: 1383340462}
   - {fileID: 1867521637}
+  - {fileID: 1000817209}
