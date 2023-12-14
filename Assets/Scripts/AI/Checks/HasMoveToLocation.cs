@@ -3,8 +3,10 @@ using UnityEngine;
 
 public class HasMoveToLocation : Task
 {
-    public HasMoveToLocation(BehaviorTree tree) : base(tree)
+    private MoveToLocation _MoveTask;
+    public HasMoveToLocation(BehaviorTree tree, MoveToLocation moveTask) : base(tree)
     {
+        _MoveTask = moveTask;
     }
 
     public override ETaskStatus RunTask()
@@ -17,6 +19,8 @@ public class HasMoveToLocation : Task
         if(moveToLocation != Vector3.zero)
             return ETaskStatus.SUCCESS;
 
+        if(_MoveTask != null)
+            _MoveTask._HasPolled = false;
         return ETaskStatus.FAILURE;
     }
 }

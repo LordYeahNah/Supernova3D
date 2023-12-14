@@ -3,8 +3,11 @@ using UnityEngine;
 
 public class ColonistBT : BehaviorTree
 {
+    private MoveToLocation _GeneralMoveTask;
+
     public ColonistBT(Blackboard blackboardRef) : base(blackboardRef)
     {
+        _GeneralMoveTask = new MoveToLocation(this);
     }
 
     protected override Task CreateTree()
@@ -13,8 +16,8 @@ public class ColonistBT : BehaviorTree
         {
             new Sequence(this, new List<Task>
             {
-                new HasMoveToLocation(this),
-                new MoveToLocation(this)
+                new HasMoveToLocation(this, _GeneralMoveTask),
+                _GeneralMoveTask
             }) 
         });
     }
