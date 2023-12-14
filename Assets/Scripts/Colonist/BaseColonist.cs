@@ -13,17 +13,8 @@ public enum EAgeGroup
     ADULT
 }
 
-public class BaseColonist
+public class BaseColonist : BaseCharacter
 {
-    // === Colonist Details === //
-    private string _FirstName;
-    private string _LastName;
-    private ESex _Sex;
-
-    public string FirstName => _FirstName;
-    public string LastName => _LastName;
-    public string Name => $"{_FirstName} {_LastName}";
-    public ESex Sex => _Sex;
 
     // === AGE SETTINGS === //
     private readonly float AGE_INCREMENT = 0.03f;                               // Rate that the character will age at
@@ -38,8 +29,6 @@ public class BaseColonist
     // === Colonist Stats === //
     private Supernova _Supernova;
     private readonly float MAX_HEALTH = 100f;
-    private float _CurrentHealth;
-    private float CurrentHealth => _CurrentHealth;
     public Supernova SupernovaStats => _Supernova;
 
     // === Controller Details === //
@@ -67,7 +56,7 @@ public class BaseColonist
         _AgeTimer = new Timer(1.0f, UpdateAge, true, true);
     }
 
-    public void OnUpdate(float dt)
+    public override void OnUpdate()
     {
         // Update the characters age
         if(_AgeTimer != null)
