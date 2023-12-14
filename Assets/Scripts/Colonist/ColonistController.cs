@@ -1,6 +1,7 @@
 using System;
 using Pathfinding;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class ColonistController : MonoBehaviour
 {
@@ -39,25 +40,9 @@ public class ColonistController : MonoBehaviour
 		}
 	}
 
-
-	/// <summary>
-	/// Sets the colonist and this controller to the colonist
-	/// </summary>
-	/// <param name="colonist">Colonist to set</param>
-	public void Setup(BaseColonist colonist)
+	public void StopMovement()
 	{
-		_Colonist = colonist;							// Set the colonist
-
-		// Validate the colonist and set its controller
-		if (_Colonist != null)
-		{
-			_Colonist.Controller = this;				// Set the controller
-			// Check if we want to add this character to the colony
-			if (_AddToColony)
-			{
-                // TODO: Add coloinst to colony
-			}
-		}
-		
+		if(_Seeker)
+			_Seeker.CancelCurrentPathRequest();
 	}
 }
