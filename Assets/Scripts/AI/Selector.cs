@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Sequence : Task
+public class Selector : Task
 {
-    public Sequence(BehaviorTree tree) : base(tree)
+    public Selector(BehaviorTree tree) : base(tree)
     {
     }
 
@@ -14,14 +14,14 @@ public class Sequence : Task
             switch(child.RunTask())
             {
                 case ETaskStatus.SUCCESS:
-                    continue;
+                    return ETaskStatus.SUCCESS;
                 case ETaskStatus.FAILURE:
-                    return ETaskStatus.FAILURE;
+                    continue;
                 case ETaskStatus.RUNNING:
                     return ETaskStatus.RUNNING;
             }
         }
 
-        return ETaskStatus.SUCCESS;
+        return ETaskStatus.FAILURE;
     }
 }
