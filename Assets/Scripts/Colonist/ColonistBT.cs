@@ -7,6 +7,12 @@ public class ColonistBT : BehaviorTree
 
     public ColonistBT(Blackboard blackboardRef) : base(blackboardRef)
     {
+        
+    }
+
+    protected override void OnInitialize()
+    {
+        base.OnInitialize();
         _GeneralMoveTask = new MoveToLocation(this);
     }
 

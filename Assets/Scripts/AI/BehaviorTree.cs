@@ -10,7 +10,13 @@ public abstract class BehaviorTree
     public BehaviorTree(Blackboard blackboardRef)
     {
         _BlackboardRef = blackboardRef;
+        OnInitialize();
         _RootTask = CreateTree();
+    }
+
+    protected virtual void OnInitialize()
+    {
+
     }
 
     public void OnUpdate()
