@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     private bool _IsMouseDown = false;
     private bool _IsDragging = false;
     private GameObject _SelectedCharacter;                          // Reference to the selected character
+    private Vector3 _SelectedCharacterInitialPosition;                      // Reference to where the character was prior to dragging
 
     [Header("Components")]
     [SerializeField] private Camera _Cam;
@@ -58,8 +59,12 @@ public class PlayerController : MonoBehaviour
 
         if(Input.GetMouseButtonUp(0))
         {
+            if(_IsDragging && _SelectedCharacter)
+            {
+                _DetectAddCharacterToRoom();
+            }
+
             _IsMouseDown = false;
-            _IsDragging = false;
         }
 
 
@@ -112,12 +117,40 @@ public class PlayerController : MonoBehaviour
         {
             _IsDragging = true;
             _SelectedCharacter.GetComponent<ColonistController>()?.StopMovement();
-
+            _SelectedCharacterInitialPosition = _SelectedCharacter.transform.position;
         }
         else
         {
             _SelectedCharacter = null;
         }
+    }
+
+    private void _DetectAddCharacterToRoom()
+    {
+        Ray ray = _Cam.ScreenPointToRay(Input.mousePosition);
+        if(Physics.Raycast(ray, out RaycastHit hit, 1000f, _CharacterDragMask))
+        {
+            GridCell cell = _Grid.GetCell(hit.point);
+            if(cell != null && cell.HasAssignedRoom)
+            {
+                ColonistController controller = _SelectedCharacter.GetComponent<ColonistController>();
+                if(controller != null)
+                {
+                    BaseColonist colonist = controller.Colonist;
+                    if(colonist != null)
+                    {
+                        if(cell._AssignedRoom.AddColonist(colonist))
+                        {
+                            colonist.SetLocation(cell.CellPosition);
+                        }
+                    }
+                }
+            }
+        }
+
+        _SelectedCharacter.transform.position = _SelectedCharacterInitialPosition;
+        _SelectedCharacter = null;
+        _IsDragging = false;
     }
 
     private void DisplayRoom(BaseRoom room)

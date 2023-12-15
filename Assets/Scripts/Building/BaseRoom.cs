@@ -82,11 +82,11 @@ public abstract class BaseRoom
     /// Adds a new colonist to the room
     /// </summary>
     /// <param name="colonist">Colonist to add</param>
-    public void AddColonist(BaseColonist colonist)
+    public bool AddColonist(BaseColonist colonist)
     {
         // Validate there is room for the colonist
         if (_Colonist.Count > MaxColonist)
-            return;
+            return false;;
         
         _Colonist.Add(colonist);                    // Add the coloniist
         
@@ -95,6 +95,7 @@ public abstract class BaseRoom
             _ResourceTimer.IsActive = true;
         
         _CalculateTimeBasedOnColonist();
+        return true;
     }
 
     /// <summary>
