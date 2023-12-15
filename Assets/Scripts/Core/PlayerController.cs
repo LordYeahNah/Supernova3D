@@ -11,7 +11,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Camera _Cam;
     [SerializeField] private GridController _Grid;                      // Store reference to the current grid controller
     [SerializeField] private BuildingController _Building;                      // Store reference to the building controller
-
+    [SerializeField] private RoomInfoHUD _RoomInfoUI;                    // Store reference to the room UI
+    private bool _RoomInfoActive = false;
     private void Awake()
     {
         // Get reference to the camera
@@ -29,6 +30,15 @@ public class PlayerController : MonoBehaviour
             if(Input.GetMouseButtonDown(0))
             {
                 CastToRoom();
+            }
+
+            if(Input.GetKeyDown(KeyCode.Escape))
+            {
+                if(_RoomInfoActive)
+                {
+                    _RoomInfoUI.gameObject.SetActive(false);
+                    _RoomInfoActive = false;
+                }
             }
         }
     }
@@ -55,6 +65,11 @@ public class PlayerController : MonoBehaviour
 
     private void DisplayRoom(BaseRoom room)
     {
-
+        if(_RoomInfoUI)
+        {
+            _RoomInfoUI.gameObject.SetActive(true);
+            _RoomInfoUI.Setup(room);
+            _RoomInfoActive = true;
+        }
     }
 }
