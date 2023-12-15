@@ -232,4 +232,9 @@ public abstract class BaseRoom
         return "";
     }
 
+    public int GetRoomSize()
+    {
+        return _Cells.GetLength(0) + _Cells.GetLength(1);
+    }
+
 }
