@@ -22,6 +22,9 @@ public class Timer
 
     public void OnUpdate()
     {
+        if(!IsActive)
+            return;
+            
         _CurrentTime += 1 * Time.deltaTime;
         if(_CurrentTime > TimerLength)
             _CompleteTimer();

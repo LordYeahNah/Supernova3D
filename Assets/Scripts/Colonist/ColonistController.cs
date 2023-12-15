@@ -44,7 +44,7 @@ public class ColonistController : MonoBehaviour
 
 		if(_AddToColony)
 		{
-			ColonyController.Instance.AddColonist(Colonist);
+			ShipController.Instance.AddColonist(Colonist);
 		}
 	}
 

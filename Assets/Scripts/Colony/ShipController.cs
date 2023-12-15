@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.Events;
 
 public enum EAddColonistFlag
 {
@@ -8,10 +9,10 @@ public enum EAddColonistFlag
     ERROR = 2
 }
 
-public class ColonyController : MonoBehaviour
+public class ShipController : MonoBehaviour
 {
 
-    public static ColonyController Instance;
+    public static ShipController Instance;
 
     public bool IsInBuildMode = false;
     private List<BaseColonist> _Colonist = new List<BaseColonist>();                    // List of all colonist in the colony
@@ -19,6 +20,7 @@ public class ColonyController : MonoBehaviour
     public ColonyResources Resources;                  // TODO: Rename as public variable
 
     private List<BaseRoom> _Rooms = new List<BaseRoom>();
+    public UnityEvent _OnResourcesUpdate;
 
     private void Awake()
     {

@@ -242,6 +242,8 @@ public class BuildingController : MonoBehaviour
                 if(!_SpawnedDoor)
                     _SpawnedDoor = GameObject.Instantiate(_SelectedRoom.Door);
 
+                ShipController.Instance.AddRoom(placingRoom);
+
                 IsPlacingRoom = false;
                 IsPlacingDoor = true;
                 _DeselectAll();

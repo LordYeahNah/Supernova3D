@@ -45,12 +45,16 @@ public class ColonyResources
     // === Timers === //
     private Timer _UsageTimer;
 
-    public ColonyResources()
+    private ShipController _Owner;                          // Reference to the ship that owns this object
+
+    public ColonyResources(ShipController ship)
     {
         _UsageTimer = new Timer(1.0f, HandleUsage, true, false);
+        _Owner = ship;
+        _Owner._OnResourcesUpdate?.Invoke();
     }
 
-    public ColonyResources(float currentFood, float currentWater, float currentPower, List<BaseColonist> colonistList)
+    public ColonyResources(ShipController ship, float currentFood, float currentWater, float currentPower, List<BaseColonist> colonistList)
     {
         _CurrentFood = currentFood;
         _CurrentWater = currentWater;
@@ -58,6 +62,9 @@ public class ColonyResources
 
         CalculateFoodAndWater(colonistList);
         _UsageTimer = new Timer(1.0f, HandleUsage, true, false);
+
+        _Owner = ship;
+        _Owner._OnResourcesUpdate?.Invoke();
     }
 
     public void CalculateFoodAndWater(List<BaseColonist> colonistList)
@@ -91,6 +98,9 @@ public class ColonyResources
         _CurrentFood -= _MinFood;
         _CurrentWater -= _MinWater;
         _CurrentPower -= _MinPower;
+
+        if(_Owner != null)
+            _Owner._OnResourcesUpdate?.Invoke();
     }
 
     public void AddPower(int value)
@@ -98,5 +108,31 @@ public class ColonyResources
         _CurrentPower += value;
         if (_CurrentPower > _MaxPower)
             _CurrentPower = _MaxPower;
+
+        if(_Owner != null)
+        {
+            _Owner._OnResourcesUpdate?.Invoke();
+        }
+        
+    }
+
+    public void AddWater(int value)
+    {
+        _CurrentWater += value;
+        if(_CurrentWater > _MaxWater)
+            _CurrentWater = _MaxWater;
+
+        if(_Owner != null)
+            _Owner._OnResourcesUpdate?.Invoke();
+    }
+
+    public void AddFood(int value)
+    {
+        _CurrentFood += value;
+        if(_CurrentFood > _MaxFood)
+            _CurrentFood = _MaxFood;
+
+        if(_Owner != null)
+            _Owner._OnResourcesUpdate?.Invoke();
     }
 }

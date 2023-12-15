@@ -52,4 +52,12 @@ public class RoomInfoHUD : MonoBehaviour
         }
     }
 
+    public void _OnCollectResources()
+    {
+        if(_ViewingRoom != null)
+        {
+            _ViewingRoom.OnCollectResources();
+        }
+    }
+
 }

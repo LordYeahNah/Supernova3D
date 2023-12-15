@@ -10,7 +10,7 @@ public class PowerGenerator : BaseRoom
     public override void OnCollectResources()
     {
         base.OnCollectResources();
-        ColonyController.Instance?.Resources?.AddPower(Mathf.FloorToInt(_ResourcesPerCycle));
+        ShipController.Instance?.Resources?.AddPower(Mathf.FloorToInt(_ResourcesPerCycle));
     }
 
     protected override void _CalculateTimeBasedOnColonist()
