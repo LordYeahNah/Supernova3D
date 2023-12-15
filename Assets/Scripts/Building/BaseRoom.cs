@@ -45,6 +45,8 @@ public abstract class BaseRoom
     private bool _IsReadyForCollection = false;
     public bool IsReadyForCollection => _IsReadyForCollection;
 
+    public float StorageAmount => Data.StoragePerCell * GetRoomSize();
+
     public BaseRoom(RoomData data)
     {
         _Data = data;
