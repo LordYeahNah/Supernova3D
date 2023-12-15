@@ -60,11 +60,12 @@ public class BaseColonist : BaseCharacter
     public override void OnInitialize()
     {
         base.OnInitialize();
-        _BlackboardRef.SetValue(GeneralKeys.MOVE_TO_LOCATION, Controller.DebugPosition);
+        SetLocation(Controller.DebugPosition.position);
     }
 
     public override void OnUpdate()
     {
+        base.OnUpdate();
         // Update the characters age
         if(_AgeTimer != null)
             _AgeTimer.OnUpdate();

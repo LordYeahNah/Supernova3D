@@ -32,17 +32,30 @@ public class ColonistController : MonoBehaviour
 			_Colonist.CharacterTransform = this.transform;
 			_Colonist.OnInitialize();
 		}
+
+		if(_AddToColony)
+		{
+			ColonyController.Instance.AddColonist(Colonist);
+		}
 	}
 
 	private void Start()
 	{
-		
+	
 	}
 
 	public void SetMoveToLocation(Vector3 moveToLocation)
 	{
 		if(_Seeker)
-			_Seeker.StartPath(this.transform.position, moveToLocation);
+			_Seeker.StartPath(this.transform.position, moveToLocation, OnPathComplete);
+	}
+
+	public void OnPathComplete(Path p)
+	{
+		if(p.error)
+		{
+			Debug.LogError("#ColonistController::OnPathComplete" + p.errorLog);
+		}
 	}
 
 	public void StopMovement()

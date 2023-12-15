@@ -21,6 +21,7 @@ public class HasMoveToLocation : Task
 
         if(_MoveTask != null)
             _MoveTask._HasPolled = false;
+            
         return ETaskStatus.FAILURE;
     }
 }
