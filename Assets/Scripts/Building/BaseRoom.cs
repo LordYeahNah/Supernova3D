@@ -32,9 +32,8 @@ public abstract class BaseRoom
             _CurrentResourceTime = value;
         }
     } 
-
-    protected float _ResourcesPerCycle;                             // Amount of resources that will be produced this cycle
-    public float ResourcesPerCycle => _ResourcesPerCycle;
+                       // Amount of resources that will be produced this cycle
+    public float ResourcesPerCycle => Data.ResourcesGenerated * GetRoomSize();
 
     // === Colonist Settings === //
     protected List<BaseColonist> _Colonist = new List<BaseColonist>();                      // Colonist that are assigned to this room
