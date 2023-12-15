@@ -213,4 +213,22 @@ public abstract class BaseRoom
         _Cells = updatedCells;                          // Assign the cells
     }
 
+    public string CalculateAndPrintTimeRemaining()
+    {
+        if(_ResourceTimer != null)
+        {
+            int minutes = Mathf.FloorToInt(_ResourceTimer.TimeRemaining / 60);
+            int seconds = Mathf.FloorToInt(_ResourceTimer.TimeRemaining % 60);
+            if(minutes > 0)
+            {
+                return $"{minutes}m {seconds}s";
+            } else
+            {
+                return $"{seconds}s";
+            }
+        }
+
+        return "";
+    }
+
 }
