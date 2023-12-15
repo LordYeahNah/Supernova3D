@@ -57,11 +57,23 @@ public class BaseColonist : BaseCharacter
         _AgeTimer = new Timer(1.0f, UpdateAge, true, true);
     }
 
+    public override void OnInitialize()
+    {
+        base.OnInitialize();
+        _BlackboardRef.SetValue(GeneralKeys.MOVE_TO_LOCATION, Controller.DebugPosition);
+    }
+
     public override void OnUpdate()
     {
         // Update the characters age
         if(_AgeTimer != null)
             _AgeTimer.OnUpdate();
+    }
+
+    protected override void InitializeAI()
+    {
+        base.InitializeAI();
+        _Tree = new ColonistBT(_BlackboardRef);
     }
 
     private void UpdateAge()
