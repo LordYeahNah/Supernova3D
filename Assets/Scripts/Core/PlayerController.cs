@@ -5,7 +5,15 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [Header("Layer Mask")]
-    [SerializeField] private LayerMask _RoomLayerMask;
+    [SerializeField] private LayerMask _GeneralMask;
+    [SerializeField] private LayerMask _CharacterDragMask;
+
+    [Header("Hold Settings")]
+    [SerializeField, Tooltip("How long to hold character before dragging"), Range(0, 1)] 
+    private float _CharacterHoldTime = 0.5f;
+    private bool _IsMouseDown = false;
+    private bool _IsDragging = false;
+    private GameObject _SelectedCharacter;                          // Reference to the selected character
 
     [Header("Components")]
     [SerializeField] private Camera _Cam;
@@ -29,7 +37,8 @@ public class PlayerController : MonoBehaviour
         {
             if(Input.GetMouseButtonDown(0))
             {
-                CastToRoom();
+                _PerformCast();
+                _IsMouseDown = true;
             }
 
             if(Input.GetKeyDown(KeyCode.Escape))
@@ -40,27 +49,75 @@ public class PlayerController : MonoBehaviour
                     _RoomInfoActive = false;
                 }
             }
+
+            if(_IsDragging)
+            {
+                _DragCharacter();
+            }
         }
+
+        if(Input.GetMouseButtonUp(0))
+        {
+            _IsMouseDown = false;
+            _IsDragging = false;
+        }
+
+
     }
 
-    private bool CastToRoom()
+    private bool _PerformCast()
     {
         // Verifiy reference to the grid
         if(!_Grid)
             return false;
 
         Ray ray = _Cam.ScreenPointToRay(Input.mousePosition);
-        if(Physics.Raycast(ray, out RaycastHit hit, 1000f, _RoomLayerMask))
+        if(Physics.Raycast(ray, out RaycastHit hit, 1000f, _GeneralMask))
         {
-            GridCell cell = _Grid.GetCell(hit.point);
-            if(cell != null && cell.HasAssignedRoom)
+            if(hit.collider.CompareTag("Colonist"))
             {
-                DisplayRoom(cell._AssignedRoom);
-                return true;
+                _SelectedCharacter = hit.collider.gameObject;
+                StartCoroutine(_DetermineIfHolding());
+            } else 
+            {
+                GridCell cell = _Grid.GetCell(hit.point);
+                if(cell != null && cell.HasAssignedRoom)
+                {
+                    DisplayRoom(cell._AssignedRoom);
+                    return true;
+                }
             }
         }
 
         return false;
+    }
+
+    private void _DragCharacter()
+    {
+        if(!_SelectedCharacter)
+        {
+            _IsDragging = false;
+        }
+        Ray ray = _Cam.ScreenPointToRay(Input.mousePosition);
+        if(Physics.Raycast(ray, out RaycastHit hit, 1000f, _CharacterDragMask))
+        {
+            _SelectedCharacter.transform.position = hit.point;
+        }
+    }
+
+    private IEnumerator _DetermineIfHolding()
+    {
+        yield return new WaitForSeconds(_CharacterHoldTime);
+        if(_IsMouseDown)
+        {
+            _IsDragging = true;
+            _SelectedCharacter.GetComponent<ColonistController>()?.StopMovement();
+
+        }
+        else
+        {
+            _SelectedCharacter = null;
+        }
     }
 
     private void DisplayRoom(BaseRoom room)

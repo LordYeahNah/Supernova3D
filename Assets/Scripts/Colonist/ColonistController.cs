@@ -13,7 +13,12 @@ public class ColonistController : MonoBehaviour
 	[Header("Colonist Generation")]
 	[SerializeField] private bool _GenerateColonist = false;
 	[SerializeField] private bool _AddToColony = false;
+
+	[Header("AI")]
 	[SerializeField] private Seeker _Seeker;							// Reference to the AI Seeker
+	[SerializeField] private AIPath _Path;									// Reference to the AI Path Controller
+
+	[Header("Debug")]
 	public Transform DebugPosition;
 
 	
@@ -25,6 +30,10 @@ public class ColonistController : MonoBehaviour
 		if(!_Seeker)
 			TryGetComponent<Seeker>(out _Seeker);
 
+	}
+
+	private void Start()
+	{
 		if(_GenerateColonist)
 		{
 			_Colonist = ColonistGenerator.GenerateColonist(false);
@@ -39,15 +48,13 @@ public class ColonistController : MonoBehaviour
 		}
 	}
 
-	private void Start()
-	{
-	
-	}
-
 	public void SetMoveToLocation(Vector3 moveToLocation)
 	{
 		if(_Seeker)
 			_Seeker.StartPath(this.transform.position, moveToLocation, OnPathComplete);
+
+		if(_Path)
+			_Path.canMove = true;
 	}
 
 	public void OnPathComplete(Path p)
@@ -60,7 +67,9 @@ public class ColonistController : MonoBehaviour
 
 	public void StopMovement()
 	{
-		if(_Seeker)
-			_Seeker.CancelCurrentPathRequest();
+		if(_Path)
+			_Path.canMove = false;
+
+		_Colonist.StopMovement();
 	}
 }
