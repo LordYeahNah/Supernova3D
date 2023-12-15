@@ -61,7 +61,7 @@ public class ColonyResources
         _CurrentPower = currentPower;
 
         CalculateFoodAndWater(colonistList);
-        _UsageTimer = new Timer(1.0f, HandleUsage, true, false);
+        _UsageTimer = new Timer(1.0f, HandleUsage, true, true);
 
         _Owner = ship;
         _Owner._OnResourcesUpdate?.Invoke();
@@ -76,6 +76,9 @@ public class ColonyResources
             _MinWater += colonist.WaterUsagePerSecond;
             _MinFood += colonist.FoodUsagePerSecond;
         }
+
+        if(_Owner != null)
+            _Owner._OnResourcesUpdate?.Invoke();
     }
 
     public void CalculatePower(List<BaseRoom> roomList)
@@ -85,6 +88,9 @@ public class ColonyResources
         {
             _MinPower += room.PowerPerSecond();
         }
+
+        if(_Owner != null)
+            _Owner._OnResourcesUpdate?.Invoke();
     }
 
     public void OnUpdate(float dt)

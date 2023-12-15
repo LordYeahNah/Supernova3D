@@ -33,7 +33,8 @@ public class ShipController : MonoBehaviour
             Destroy(this.gameObject);
         }
 
-        Resources = new ColonyResources(10, 10, 10, _Colonist);
+        Resources = new ColonyResources(this, 10, 10, 10, _Colonist);
+        Resources.CalculateFoodAndWater(_Colonist);
     }
 
     private void Update()
@@ -67,7 +68,10 @@ public class ShipController : MonoBehaviour
         if(colonist != null && !_Colonist.Contains(colonist))
         {
             _Colonist.Add(colonist);
-            Resources.CalculateFoodAndWater(_Colonist);                    // Recalculate colonist
+            if(Resources != null)
+            {
+                Resources.CalculateFoodAndWater(_Colonist);                    // Recalculate colonist
+            }
             return EAddColonistFlag.SUCCESS;
         }
 
