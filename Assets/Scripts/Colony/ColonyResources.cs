@@ -81,6 +81,22 @@ public class ColonyResources
             _Owner._OnResourcesUpdate?.Invoke();
     }
 
+    public void CalculateMaxFoodAndWater(List<BaseRoom> rooms)
+    {
+        _MaxWater = 0f;
+        _MaxFood = 0f;
+        foreach(var room in rooms)
+        {
+            if(room.Data.ResourceType == EResourceType.FOOD)
+            {
+                _MaxFood += room.StorageAmount;
+            } else if(room.Data.ResourceType == EResourceType.WATER)
+            {
+                _MaxWater += room.StorageAmount;
+            }
+        }
+    }
+
     public void CalculatePower(List<BaseRoom> roomList)
     {
         _MinPower = 0f;
