@@ -10,6 +10,8 @@ public class Timer
     public bool Loop;
     public event Action TimerCompleteActions;
 
+    public float TimeRemaining => TimerLength - _CurrentTime;
+
     public Timer(float length, Action completeAction, bool loop = false, bool isActive = true)
     {
         TimerLength = length;
