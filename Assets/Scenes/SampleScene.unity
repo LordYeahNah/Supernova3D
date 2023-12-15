@@ -335,7 +335,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 298984515}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 392137530}
+        m_TargetAssemblyTypeName: RoomInfoHUD, Assembly-CSharp
+        m_MethodName: _OnCollectResources
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &298984515
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -817,8 +829,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -52, y: -407.24}
-  m_SizeDelta: {x: -968.1807, y: -905.8514}
+  m_AnchoredPosition: {x: -52, y: 413}
+  m_SizeDelta: {x: -968.1807, y: -898.49567}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &392137528
 MonoBehaviour:
@@ -4464,25 +4476,27 @@ MonoBehaviour:
   - RoomName: Power Generator
     ResourceType: 0
     _PowerUsagePerSecond: 0
-    BaseTimePerRoomSize: 80
+    BaseTimePerRoomSize: 20
     ResourcesGenerated: 30
+    StoragePerCell: 5
     Wall: {fileID: 5266219654642771460, guid: 4cb792f918933074f885de2a3766ac8b, type: 3}
     Floor: {fileID: 7739443759055344836, guid: 3c397ca2e47e5ef4181d497238959116, type: 3}
     Corner: {fileID: 0}
     Door: {fileID: 218078635654494807, guid: 5e2b9ec7623c4ef44a9db82b4f98f78d, type: 3}
-    MinCellsX: 3
-    MinCellsY: 3
+    MinCellsX: 2
+    MinCellsY: 2
   - RoomName: Food Synthesis
     ResourceType: 1
     _PowerUsagePerSecond: 0.03
     BaseTimePerRoomSize: 60
     ResourcesGenerated: 25
+    StoragePerCell: 5
     Wall: {fileID: 5266219654642771460, guid: 4cb792f918933074f885de2a3766ac8b, type: 3}
     Floor: {fileID: 7739443759055344836, guid: 3c397ca2e47e5ef4181d497238959116, type: 3}
     Corner: {fileID: 0}
     Door: {fileID: 218078635654494807, guid: 5e2b9ec7623c4ef44a9db82b4f98f78d, type: 3}
-    MinCellsX: 3
-    MinCellsY: 3
+    MinCellsX: 2
+    MinCellsY: 2
 --- !u!4 &1862694948
 Transform:
   m_ObjectHideFlags: 0
