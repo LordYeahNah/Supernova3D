@@ -22,6 +22,11 @@ public abstract class BaseCharacter
     protected Blackboard _BlackboardRef;
     protected BehaviorTree _Tree;
 
+    public virtual void OnInitialize()
+    {
+        InitializeAI();
+    }
+
     /// <summary>
     /// Called each frame
     /// </summary>
