@@ -37,7 +37,7 @@ public class RoomInfoHUD : MonoBehaviour
         if(_ViewingRoom == null)
             return;
 
-        if(_ReadyButton != null && _ReadyInText)
+        if(_ReadyButton && _ReadyInText)
         {
             if(_ViewingRoom.IsReadyForCollection)
             {
@@ -47,6 +47,7 @@ public class RoomInfoHUD : MonoBehaviour
             {
                 _ReadyButton.SetActive(false);
                 _ReadyInText.gameObject.SetActive(true);
+                _ReadyInText.text = $"Ready In: {_ViewingRoom.CalculateAndPrintTimeRemaining()}";
             }
         }
     }
