@@ -91,7 +91,13 @@ public class ShipController : MonoBehaviour
     public void AddRoom(BaseRoom room)
     {
         _Rooms.Add(room);
-        Resources.CalculatePower(_Rooms);
+        if(Resources != null)
+        {
+            Resources.CalculatePower(_Rooms);
+            Resources.CalculateMaxFoodAndWater(_Rooms);
+            _OnResourcesUpdate?.Invoke();
+        }
+        
     } 
     public void RemoveRoom(BaseRoom room) => _Rooms.Remove(room);
 }
