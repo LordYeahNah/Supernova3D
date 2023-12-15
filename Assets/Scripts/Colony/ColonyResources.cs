@@ -75,6 +75,7 @@ public class ColonyResources
         {
             _MinWater += colonist.WaterUsagePerSecond;
             _MinFood += colonist.FoodUsagePerSecond;
+
         }
 
         if(_Owner != null)
@@ -100,9 +101,12 @@ public class ColonyResources
     public void CalculatePower(List<BaseRoom> roomList)
     {
         _MinPower = 0f;
+        _MaxPower = 0f;
         foreach (var room in roomList)
         {
             _MinPower += room.PowerPerSecond();
+            if(room.Data.ResourceType == EResourceType.POWER)
+                _MaxPower += room.StorageAmount;
         }
 
         if(_Owner != null)
@@ -120,6 +124,37 @@ public class ColonyResources
         _CurrentFood -= _MinFood;
         _CurrentWater -= _MinWater;
         _CurrentPower -= _MinPower;
+
+        if(_CurrentFood < _MinFood)
+        {
+            // TODO: Start reducing happiness of colonist
+            if(_CurrentFood <= 0)
+            {
+                // TODO: Start reducing Health
+                _CurrentFood = 0f;
+            }
+        }
+            
+
+        if(_CurrentWater < _MinWater)
+        {
+            // TODO: Start reducing happiness of colonist
+            if(_CurrentWater <= 0)
+            {
+                // TODO: Start reducing Health
+                _CurrentWater = 0f;
+            }
+        }
+
+        if(_CurrentPower < _MinPower)
+        {
+            // TODO: Power down rooms furthest away
+            if(_CurrentPower < 0)
+            {
+                // TODO: Start Reducing Health
+                _CurrentPower = 0f;
+            }
+        }
 
         if(_Owner != null)
             _Owner._OnResourcesUpdate?.Invoke();
