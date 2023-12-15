@@ -14,7 +14,7 @@ public class ColonistController : MonoBehaviour
 	[SerializeField] private bool _GenerateColonist = false;
 	[SerializeField] private bool _AddToColony = false;
 	[SerializeField] private Seeker _Seeker;							// Reference to the AI Seeker
-	[SerializeField] private Transform _DebugPosition;
+	public Transform DebugPosition;
 
 	
 
@@ -30,21 +30,19 @@ public class ColonistController : MonoBehaviour
 			_Colonist = ColonistGenerator.GenerateColonist(false);
 			_Colonist.Controller = this;
 			_Colonist.CharacterTransform = this.transform;
+			_Colonist.OnInitialize();
 		}
 	}
 
 	private void Start()
 	{
-		if(_Seeker)
-			_Seeker.StartPath(this.transform.position, _DebugPosition.position, OnPathComplete);
+		
 	}
 
-	public void OnPathComplete(Path p)
+	public void SetMoveToLocation(Vector3 moveToLocation)
 	{
-		if(p.error)
-		{
-			Debug.Log("#ColonistController::OnPathComplete --> Failed to complete path");
-		}
+		if(_Seeker)
+			_Seeker.StartPath(this.transform.position, moveToLocation);
 	}
 
 	public void StopMovement()
